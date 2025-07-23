@@ -1,0 +1,40 @@
+
+# docker-compose.yml
+version: '3.8'
+
+services:
+  integration-service:
+    build: .
+    ports:
+      - "8001:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:admin@postgres:5432/launchpaid_db
+      - REDIS_URL=redis://redis:6379
+      - TIKTOK_APP_KEY=${TIKTOK_APP_KEY}
+      - TIKTOK_APP_SECRET=${TIKTOK_APP_SECRET}
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./app:/app/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=tiktok_user
+      - POSTGRES_PASSWORD=tiktok_pass
+      - POSTGRES_DB=tiktok_integration
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+
+volumes:
+  postgres_data:
