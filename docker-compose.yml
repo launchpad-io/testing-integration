@@ -6,7 +6,7 @@ services:
   integration-service:
     build: .
     ports:
-      - "8001:8000"
+      - "8005:8005"
     environment:
       - DATABASE_URL=postgresql+asyncpg://postgres:admin@postgres:5432/launchpaid_db
       - REDIS_URL=redis://redis:6379
@@ -18,7 +18,7 @@ services:
       - redis
     volumes:
       - ./app:/app/app
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8005 --reload
 
   postgres:
     image: postgres:15
