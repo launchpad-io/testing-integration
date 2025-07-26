@@ -16,4 +16,4 @@ api_router.include_router(
     tiktok_account.router,
     prefix="/tiktok/account",
     tags=["TikTok Account Authentication"]
-) 
+)

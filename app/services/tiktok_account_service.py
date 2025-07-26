@@ -18,6 +18,9 @@ class TikTokAccountService:
         self.client_id = settings.TIKTOK_CLIENT_ID
         self.client_secret = settings.TIKTOK_CLIENT_SECRET
         self.redirect_uri = settings.TIKTOK_REDIRECT_URI
+        self.app_id = settings.TIKTOK_APP_ID
+        self.developer_id = settings.TIKTOK_DEVELOPER_ID
+        self.app_name = "LaunchPAID"
         self.api_base_url = "https://open.tiktokapis.com/v2"
     
     def _generate_code_verifier(self) -> str:
@@ -78,9 +81,12 @@ class TikTokAccountService:
     async def init_auth(self, user_id: str, redirect_uri: str, code_challenge: str, code_challenge_method: str, state: str) -> Dict[str, Any]:
         """Initialize TikTok OAuth authentication with PKCE"""
         
-        # Build TikTok OAuth URL with PKCE parameters
+        # Build TikTok TT4D OAuth URL with PKCE parameters
         auth_params = {
             "client_key": self.client_id,
+            "developer_id": self.developer_id,
+            "app_name": self.app_name,
+            "app_id": self.app_id,
             "scope": "user.info.basic,video.list",
             "response_type": "code",
             "redirect_uri": redirect_uri,
@@ -89,10 +95,10 @@ class TikTokAccountService:
             "code_challenge_method": code_challenge_method
         }
         
-        # Create query string
+        # Create query string for TT4D API
         from urllib.parse import urlencode
         query_string = urlencode(auth_params)
-        auth_url = f"https://www.tiktok.com/v2/auth/authorize/?{query_string}"
+        auth_url = f"https://www.tiktok.com/auth/tt4d?{query_string}"
         
         return {
             "success": True,

@@ -20,9 +20,14 @@ class Settings(BaseSettings):
     TIKTOK_AUTH_URL: str = "https://auth.tiktok-shops.com/oauth/authorize"
     TIKTOK_TOKEN_URL: str = "https://auth.tiktok-shops.com/api/v2/token"
     
-    # TikTok Account Integration settings
-    TIKTOK_CLIENT_ID: str = os.getenv("TIKTOK_CLIENT_ID", "")
+    
+    # TikTok for Business (TT4D) settings - For creator/user authentication
+    TIKTOK_CLIENT_KEY: str = os.getenv("TIKTOK_CLIENT_KEY", "sbaw1vhcm61ex978cl")
+    TIKTOK_CLIENT_ID: str = os.getenv("TIKTOK_CLIENT_ID", "sbaw1vhcm61ex978cl")  # Alias for compatibility
     TIKTOK_CLIENT_SECRET: str = os.getenv("TIKTOK_CLIENT_SECRET", "")
+    TIKTOK_APP_ID: str = os.getenv("TIKTOK_APP_ID", "7530991098416891960")
+    TIKTOK_DEVELOPER_ID: str = os.getenv("TIKTOK_DEVELOPER_ID", "7531036806026396677")
+    TIKTOK_BUSINESS_API_URL: str = "https://business-api.tiktok.com"
     TIKTOK_REDIRECT_URI: str = os.getenv("TIKTOK_REDIRECT_URI", "http://localhost:3000/creator-dashboard/settings")
     
     # Database settings
